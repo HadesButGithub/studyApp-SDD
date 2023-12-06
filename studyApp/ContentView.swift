@@ -7,24 +7,68 @@
 
 import SwiftUI
 
+var studyType = ""
+var question = "Question not loaded."
+
+let questionDict = [
+    "Test Q1": "Test answer1",
+    "Test question2": "Test answer2",
+    "Test question3": "Test answer3",
+    "Test question4": "Test answer4",
+    "Test question5": "Test answer5",
+    "Test question6": "Test answer6",
+    "Test question7": "Test answer7",
+    "Test question8": "Test answer8",
+    "Test question9": "Test answer9"
+]
+
+var randAnswerArray = [
+    "Test 1",
+    "test 2",
+    "Test 3",
+    "Test 4",
+    "Test 5",
+    "Test 6",
+    "Test 7"
+]
+
+func retrieveQuestion() {
+    let keys = Array(questionDict.keys)
+    let randomIndex = Int.random(in: 0..<keys.count)
+    let randomQuestion = keys[randomIndex]
+    question = String(randomQuestion)
+}
+
 struct ContentView: View {
     var body: some View {
-        
         NavigationView {
             VStack {
                 Text("studyApp")
                     .font(.title)
                     .fontWeight(.heavy)
                     .padding(.bottom, 20)
+                    .onAppear() {
+                        retrieveQuestion()
+                    }
                 
                 Spacer()
                 
-                NavigationLink(destination: studyView()) {
+                NavigationLink(destination: multipleChoiceView()) {
                     mainButton(imageName: "play.fill", text: "Start")
                 }
                 .padding(.bottom, 20)
                 
-                NavigationLink(destination: settingsPage()) {
+                Menu {
+                    Button(action: {studyType = "flashCard"}) {
+                        Label("Flash Cards", systemImage: "menucard.fill")
+                    }
+                    Button(action: {studyType = "multipleChoice"}) {
+                        Label("Multiple Choice", systemImage: "list.bullet")
+                    }
+                    Button(action: {studyType = "closedPassage"}) {
+                        Label("Closed Passage", systemImage: "pencil")
+                    }
+                } label: {
                     secondaryButton(imageName: "book.fill", text: "Study Types")
                 }
                 
@@ -86,15 +130,21 @@ struct secondaryButton: View {
     }
 }
 
-struct studyView: View {
+struct multipleChoiceView: View {
     var body: some View {
-        Text("hello world! this is the study view")
-    }
-}
-
-struct settingsPage: View {
-    var body: some View {
-        Text("hello world! this is the settings page")
+        
+        Text("studyApp")
+            .font(.title)
+            .fontWeight(.heavy)
+        Text("Multiple Choice")
+            .font(.headline)
+            .fontWeight(.bold)
+        Spacer()
+        Text("\(question)")
+            .font(.largeTitle)
+            .fontWeight(.regular)
+        Spacer()
+        
     }
 }
 
