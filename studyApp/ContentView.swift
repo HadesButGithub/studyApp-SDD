@@ -9,9 +9,14 @@ import SwiftUI
 
 var studyType = ""
 var question = "Question not loaded."
+var correctAnswer = "Answer not loaded." // Always the correct answer
+var answer2 = "Answer not loaded. -- ID1"
+var answer3 = "Answer not loaded. -- ID2"
+var answer4 = "Answer not loaded. -- ID3"
+var randAnswerOrder = [correctAnswer, answer2, answer3, answer4]
 
 let questionDict = [
-    "Test Q1": "Test answer1",
+    "What is the purpose of a context diagram?": "Answer related to context diagrams",
     "Test question2": "Test answer2",
     "Test question3": "Test answer3",
     "Test question4": "Test answer4",
@@ -22,21 +27,16 @@ let questionDict = [
     "Test question9": "Test answer9"
 ]
 
-var randAnswerArray = [
-    "Test 1",
-    "test 2",
-    "Test 3",
-    "Test 4",
-    "Test 5",
-    "Test 6",
-    "Test 7"
-]
-
-func retrieveQuestion() {
+func retrieveContent() {
     let keys = Array(questionDict.keys)
+    let values = Array(questionDict.values)
+    
     let randomIndex = Int.random(in: 0..<keys.count)
-    let randomQuestion = keys[randomIndex]
-    question = String(randomQuestion)
+    question = keys[randomIndex]
+    correctAnswer = values[randomIndex]
+
+    // finish logic for getting random answers
+    randAnswerOrder.shuffle()
 }
 
 struct ContentView: View {
@@ -48,7 +48,7 @@ struct ContentView: View {
                     .fontWeight(.heavy)
                     .padding(.bottom, 20)
                     .onAppear() {
-                        retrieveQuestion()
+                        retrieveContent()
                     }
                 
                 Spacer()
@@ -83,6 +83,7 @@ struct ContentView: View {
                 } label: {
                     secondaryButton(imageName: "bubble.fill", text: "Language")
                 }
+                
                 Spacer()
             }
             .padding()
@@ -130,12 +131,28 @@ struct secondaryButton: View {
     }
 }
 
+struct multipleChoiceButton: View {
+    var text: String
+    
+    var body: some View {
+        HStack {
+            Text(text)
+                .font(.title3)
+                .fontWeight(.medium)
+                .foregroundColor(.white)
+        }
+        .frame(width: 250, height: 60)
+        .background(Color.blue)
+        .cornerRadius(20.0)
+    }
+}
+
 struct multipleChoiceView: View {
     var body: some View {
-        
         Text("studyApp")
             .font(.title)
             .fontWeight(.heavy)
+
         Text("Multiple Choice")
             .font(.headline)
             .fontWeight(.bold)
@@ -143,6 +160,30 @@ struct multipleChoiceView: View {
         Text("\(question)")
             .font(.largeTitle)
             .fontWeight(.regular)
+            .multilineTextAlignment(.center)
+        Spacer()
+    
+        Button {
+            retrieveContent()
+        } label: {
+            multipleChoiceButton(text: "\(randAnswerOrder[0])")
+        }
+        Button {
+            // add action
+        } label: {
+            multipleChoiceButton(text: "\(randAnswerOrder[1])")
+        }
+        Button {
+            // add action
+        } label: {
+            multipleChoiceButton(text: "\(randAnswerOrder[2])")
+        }
+        Button {
+            // add action
+        } label: {
+            multipleChoiceButton(text: "\(randAnswerOrder[3])")
+        }
+        
         Spacer()
         
     }
