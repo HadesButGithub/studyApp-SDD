@@ -34,6 +34,8 @@ func retrieveContent() {
     let randomIndex = Int.random(in: 0..<keys.count)
     question = keys[randomIndex]
     correctAnswer = values[randomIndex]
+    
+    
 
     // finish logic for getting random answers
     randAnswerOrder.shuffle()
@@ -101,7 +103,7 @@ struct mainButton: View {
                 .foregroundColor(.white)
             
             Text(text)
-                .font(.title3)
+                .font(.title)
                 .fontWeight(.semibold)
                 .foregroundColor(.white)
         }
@@ -164,7 +166,7 @@ struct multipleChoiceView: View {
         Spacer()
     
         Button {
-            retrieveContent()
+            // add action
         } label: {
             multipleChoiceButton(text: "\(randAnswerOrder[0])")
         }
