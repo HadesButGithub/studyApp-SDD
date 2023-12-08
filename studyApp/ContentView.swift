@@ -7,13 +7,12 @@
 
 import SwiftUI
 
-var studyType = ""
+var currentStudyType = ""
 var question = "Question not loaded."
 var correctAnswer = "Answer not loaded." // Always the correct answer
 var answer2 = "Answer not loaded. -- ID1"
 var answer3 = "Answer not loaded. -- ID2"
 var answer4 = "Answer not loaded. -- ID3"
-var randAnswerOrder = [correctAnswer, answer2, answer3, answer4]
 
 let questionDict = [
     "What is the purpose of a context diagram?": "Answer related to context diagrams",
@@ -35,24 +34,13 @@ func retrieveContent() {
     question = keys[randomIndex]
     correctAnswer = values[randomIndex]
     
-    
-
     // finish logic for getting random answers
-    randAnswerOrder.shuffle()
 }
 
 struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("studyApp")
-                    .font(.title)
-                    .fontWeight(.heavy)
-                    .padding(.bottom, 20)
-                    .onAppear() {
-                        retrieveContent()
-                    }
-                
                 Spacer()
                 
                 NavigationLink(destination: multipleChoiceView()) {
@@ -61,14 +49,11 @@ struct ContentView: View {
                 .padding(.bottom, 20)
                 
                 Menu {
-                    Button(action: {studyType = "flashCard"}) {
+                    Button(action: {currentStudyType = "flashCard"}) {
                         Label("Flash Cards", systemImage: "menucard.fill")
                     }
-                    Button(action: {studyType = "multipleChoice"}) {
+                    Button(action: {currentStudyType = "multipleChoice"}) {
                         Label("Multiple Choice", systemImage: "list.bullet")
-                    }
-                    Button(action: {studyType = "closedPassage"}) {
-                        Label("Closed Passage", systemImage: "pencil")
                     }
                 } label: {
                     secondaryButton(imageName: "book.fill", text: "Study Types")
@@ -88,10 +73,12 @@ struct ContentView: View {
                 
                 Spacer()
             }
+            .navigationTitle("studyApp")
             .padding()
         }
     }
 }
+
 
 struct mainButton: View {
     var imageName: String
@@ -127,6 +114,9 @@ struct secondaryButton: View {
                 .fontWeight(.semibold)
                 .foregroundColor(.white)
         }
+        .onAppear() {
+            retrieveContent()
+        }
         .frame(width: 250, height: 75)
         .background(Color.blue)
         .cornerRadius(20.0)
@@ -150,50 +140,59 @@ struct multipleChoiceButton: View {
 }
 
 struct multipleChoiceView: View {
+    
+    func shuffleAnswers() {
+        self.randAnswerOrder = [correctAnswer, answer2, answer3, answer4]
+        randAnswerOrder.shuffle()
+    }
+    
+    @State var randAnswerOrder = [correctAnswer, answer2, answer3, answer4]
     var body: some View {
-        Text("studyApp")
-            .font(.title)
-            .fontWeight(.heavy)
-
-        Text("Multiple Choice")
-            .font(.headline)
-            .fontWeight(.bold)
         Spacer()
         Text("\(question)")
             .font(.largeTitle)
             .fontWeight(.regular)
             .multilineTextAlignment(.center)
         Spacer()
-    
-        Button {
-            // add action
-        } label: {
-            multipleChoiceButton(text: "\(randAnswerOrder[0])")
+        VStack {
+            Button {
+                // add action
+            } label: {
+                multipleChoiceButton(text: "\(randAnswerOrder[0])")
+            }
+            Button {
+                // add action
+            } label: {
+                multipleChoiceButton(text: "\(randAnswerOrder[1])")
+            }
+            Button {
+                // add action
+            } label: {
+                multipleChoiceButton(text: "\(randAnswerOrder[2])")
+            }
+            Button {
+                // add action
+            } label: {
+                multipleChoiceButton(text: "\(randAnswerOrder[3])")
+            }
         }
-        Button {
-            // add action
-        } label: {
-            multipleChoiceButton(text: "\(randAnswerOrder[1])")
-        }
-        Button {
-            // add action
-        } label: {
-            multipleChoiceButton(text: "\(randAnswerOrder[2])")
-        }
-        Button {
-            // add action
-        } label: {
-            multipleChoiceButton(text: "\(randAnswerOrder[3])")
-        }
-        
         Spacer()
-        
+            .navigationTitle("Multiple Choice")
+            .onAppear() {
+                shuffleAnswers()
+            }
     }
 }
 
 struct remindersView: View {
     var body: some View {
         Text("hello world! this is the reminders view")
+    }
+}
+
+struct flashCardView: View {
+    var body: some View {
+        Text("hello world! this is the flash card view")
     }
 }
 
