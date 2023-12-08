@@ -3,7 +3,7 @@
 //  studyApp
 //
 //  Created by Harry Lewandowski on 9/11/2023.
-//
+//  NOTE 08/12/2023 @ 11:31am: this app might actually turn out to be good
 
 import SwiftUI
 
@@ -15,15 +15,17 @@ var answer3 = "Answer not loaded. -- ID2"
 var answer4 = "Answer not loaded. -- ID3"
 
 let questionDict = [
-    "What is the purpose of a context diagram?": "Answer related to context diagrams",
-    "Test question2": "Test answer2",
-    "Test question3": "Test answer3",
-    "Test question4": "Test answer4",
-    "Test question5": "Test answer5",
-    "Test question6": "Test answer6",
-    "Test question7": "Test answer7",
-    "Test question8": "Test answer8",
-    "Test question9": "Test answer9"
+    "What is the purpose of a context diagram?": "To illustrate the system boundaries and interactions with external entities.",
+    "What is open source software?": "Software with source code that is freely available for anyone to view, modify, and distribute.",
+    "What is public domain?": "Work that is no longer protected by copyright and can be freely used, copied, and distributed by anyone.",
+    "What is shareware software?": "Software that is typically distributed for free, allowing users to evaluate it before purchasing the full version.",
+    "What is commercial software?": "Software that is created and sold for profit.",
+    "What are site licenses?": "Agreements that allow organisations to use software across multiple computers or devices within a specific location or site.",
+    "What is disk copy protection?": "Method used to prevent unauthorized copying or duplication of software.",
+    "What is Rapid Approach Development?": "Software development methodology that emphasizes iterative and fast-paced development cycles.",
+    "What is the Structured development approach?": "A systematic software development process that breaks down the project into distinct phases or stages.",
+    "What is the End User approach?": "Approach used for small-scale projects where the user with a limited budget quickly develops the product.",
+    "What is the Agile approach?": "An iterative and flexible software development methodology that emphasizes collaboration, adaptability, and frequent feedback loops."
 ]
 
 func retrieveContent() {
@@ -34,10 +36,25 @@ func retrieveContent() {
     question = keys[randomIndex]
     correctAnswer = values[randomIndex]
     
-    // finish logic for getting random answers
+    for i in 0..<3 {
+        let randomAnswer = Int.random(in: 0..<values.count)
+        switch i {
+        case 0:
+            answer2 = values[randomAnswer]
+        case 1:
+            answer3 = values[randomAnswer]
+        case 2:
+            answer4 = values[randomAnswer]
+        default:
+            break
+        }
+    }
+
 }
 
 struct ContentView: View {
+    @State private var showNonAvailable = false
+    @State var nonAvailableUserText = ""
     var body: some View {
         NavigationView {
             VStack {
@@ -49,7 +66,10 @@ struct ContentView: View {
                 .padding(.bottom, 20)
                 
                 Menu {
-                    Button(action: {currentStudyType = "flashCard"}) {
+                    Button(action: {
+                        nonAvailableUserText = "Flash Card"
+                        showNonAvailable = true
+                    }) {
                         Label("Flash Cards", systemImage: "menucard.fill")
                     }
                     Button(action: {currentStudyType = "multipleChoice"}) {
@@ -73,6 +93,13 @@ struct ContentView: View {
                 
                 Spacer()
             }
+            .alert(isPresented: $showNonAvailable, content: {
+                Alert(
+                    title: Text("Coming soon!"),
+                    message: Text("The \(nonAvailableUserText) study type is currently unavailable."),
+                    dismissButton: .default(Text("ok :("))
+                )
+            })
             .navigationTitle("studyApp")
             .padding()
         }
@@ -129,11 +156,12 @@ struct multipleChoiceButton: View {
     var body: some View {
         HStack {
             Text(text)
-                .font(.title3)
+                .font(.body)
                 .fontWeight(.medium)
                 .foregroundColor(.white)
+                .padding(10.0)
         }
-        .frame(width: 250, height: 60)
+        .frame(width: 370, height: 95)
         .background(Color.blue)
         .cornerRadius(20.0)
     }
@@ -146,7 +174,22 @@ struct multipleChoiceView: View {
         randAnswerOrder.shuffle()
     }
     
+    func answerCorrect() {
+        alertTitle = "correct!"
+        alertText = "you got it right :D"
+        showAlert = true
+    }
+    
+    func answerIncorrect() {
+        alertTitle = "wrong 💀"
+        alertText = "you got it wrong 💀💀💀"
+        showAlert = true
+    }
+    
     @State var randAnswerOrder = [correctAnswer, answer2, answer3, answer4]
+    @State var alertTitle = ""
+    @State var alertText = ""
+    @State private var showAlert = false
     var body: some View {
         Spacer()
         Text("\(question)")
@@ -156,25 +199,48 @@ struct multipleChoiceView: View {
         Spacer()
         VStack {
             Button {
-                // add action
+                if randAnswerOrder[0] == correctAnswer {
+                    answerCorrect()
+                } else {
+                    answerIncorrect()
+                }
             } label: {
                 multipleChoiceButton(text: "\(randAnswerOrder[0])")
             }
             Button {
-                // add action
+                if randAnswerOrder[1] == correctAnswer {
+                    answerCorrect()
+                } else {
+                    answerIncorrect()
+                }
             } label: {
                 multipleChoiceButton(text: "\(randAnswerOrder[1])")
             }
             Button {
-                // add action
+                if randAnswerOrder[2] == correctAnswer {
+                    answerCorrect()
+                } else {
+                    answerIncorrect()
+                }
             } label: {
                 multipleChoiceButton(text: "\(randAnswerOrder[2])")
             }
             Button {
-                // add action
+                if randAnswerOrder[3] == correctAnswer {
+                    answerCorrect()
+                } else {
+                    answerIncorrect()
+                }
             } label: {
                 multipleChoiceButton(text: "\(randAnswerOrder[3])")
             }
+        }
+        .alert(isPresented: $showAlert){
+            Alert(
+                title: Text("\(alertTitle)"),
+                message: Text("\(alertText)"),
+                dismissButton: .default(Text("dismiss"))
+            )
         }
         Spacer()
             .navigationTitle("Multiple Choice")
