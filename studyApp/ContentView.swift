@@ -314,7 +314,10 @@ struct settingsView: View {
 
 struct flashCardView: View {
     var body: some View {
-        Text("hello world! this is the flash card view")
+        Text("Flash cards haven't been implemented yet.")
+            .font(.title)
+            .fontWeight(.semibold)
+            .multilineTextAlignment(.center)
     }
 }
 
