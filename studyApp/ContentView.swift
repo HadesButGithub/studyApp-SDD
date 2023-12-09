@@ -313,11 +313,36 @@ struct settingsView: View {
     }
 
 struct flashCardView: View {
+    @State private var flashCardContent = ""
+    
+    func initFlashCard() {
+        flashCardContent = "\(question)"
+    }
+    
     var body: some View {
-        Text("Flash cards haven't been implemented yet.")
-            .font(.title)
-            .fontWeight(.semibold)
-            .multilineTextAlignment(.center)
+        NavigationStack {
+            VStack {
+                Spacer()
+                
+                Text("\(flashCardContent)")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                
+                Spacer()
+                
+                Button("Flip") {
+                    flashCardContent = "\(correctAnswer)"
+                }
+                
+                Spacer()
+                
+            }.onAppear() {
+                initFlashCard()
+            }
+            
+        }.navigationTitle("Flash Cards")
     }
 }
 
