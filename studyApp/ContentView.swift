@@ -6,6 +6,7 @@
 //  NOTE 08/12/2023 @ 11:31am: this app might actually turn out to be good
 
 import SwiftUI
+import SPConfetti
 
 var question = "Question not loaded."
 var correctAnswer = "Answer not loaded." // Always the correct answer
@@ -56,6 +57,7 @@ struct ContentView: View {
     @State private var showFlashCard = false
     @State private var showNonAvailable = false
     @State var nonAvailableUserText = ""
+    @Binding var confettiEnabled: Bool
     
     var body: some View {
         NavigationStack {
@@ -78,7 +80,7 @@ struct ContentView: View {
                 }
                 .padding(.bottom, 20)
                 .navigationDestination(isPresented: $showMultipleChoice) {
-                    multipleChoiceView()
+                    multipleChoiceView(confettiEnabled: $confettiEnabled)
                 }
                 .navigationDestination(isPresented: $showFlashCard) {
                     flashCardView()
@@ -95,6 +97,10 @@ struct ContentView: View {
                     Text("Spanish")
                 } label: {
                     secondaryButton(imageName: "bubble.fill", text: "Language")
+                }
+                
+                NavigationLink(destination: settingsView()) {
+                    secondaryButton(imageName: "gearshape.fill", text: "More Settings")
                 }
                 
                 Spacer()
@@ -181,9 +187,12 @@ struct multipleChoiceView: View {
     }
     
     func answerCorrect() {
-        alertTitle = "correct!"
-        alertText = "you got it right :D"
-        showAlert = true
+        retrieveContent()
+        shuffleAnswers()
+        
+        if confettiEnabled == true {
+            confettiPresent = true
+        }
     }
     
     func answerIncorrect() {
@@ -196,6 +205,9 @@ struct multipleChoiceView: View {
     @State var alertTitle = ""
     @State var alertText = ""
     @State private var showAlert = false
+    @State private var confettiPresent = false
+    @Binding var confettiEnabled: Bool
+    
     var body: some View {
         NavigationStack {
             Spacer()
@@ -214,6 +226,12 @@ struct multipleChoiceView: View {
                 } label: {
                     multipleChoiceButton(text: "\(randAnswerOrder[0])")
                 }
+                .confetti(isPresented: $confettiPresent,
+                                      animation: .fullWidthToDown,
+                                      particles: [.triangle, .arc],
+                                      duration: 0.5)
+                .confettiParticle(\.velocity, 800)
+                
                 Button {
                     if randAnswerOrder[1] == correctAnswer {
                         answerCorrect()
@@ -223,6 +241,12 @@ struct multipleChoiceView: View {
                 } label: {
                     multipleChoiceButton(text: "\(randAnswerOrder[1])")
                 }
+                .confetti(isPresented: $confettiPresent,
+                                      animation: .fullWidthToDown,
+                                      particles: [.triangle, .arc],
+                                      duration: 0.5)
+                .confettiParticle(\.velocity, 800)
+                
                 Button {
                     if randAnswerOrder[2] == correctAnswer {
                         answerCorrect()
@@ -232,6 +256,12 @@ struct multipleChoiceView: View {
                 } label: {
                     multipleChoiceButton(text: "\(randAnswerOrder[2])")
                 }
+                .confetti(isPresented: $confettiPresent,
+                                      animation: .fullWidthToDown,
+                                      particles: [.triangle, .arc],
+                                      duration: 0.5)
+                .confettiParticle(\.velocity, 800)
+                
                 Button {
                     if randAnswerOrder[3] == correctAnswer {
                         answerCorrect()
@@ -241,6 +271,12 @@ struct multipleChoiceView: View {
                 } label: {
                     multipleChoiceButton(text: "\(randAnswerOrder[3])")
                 }
+                .confetti(isPresented: $confettiPresent,
+                                      animation: .fullWidthToDown,
+                                      particles: [.triangle, .arc],
+                                      duration: 0.5)
+                .confettiParticle(\.velocity, 800)
+                
             }
             .alert(isPresented: $showAlert){
                 Alert(
@@ -264,6 +300,17 @@ struct remindersView: View {
     }
 }
 
+struct settingsView: View {
+    @State var confettiEnabled = false
+    var body: some View {
+        NavigationStack {
+            Toggle(isOn: $confettiEnabled) {
+                Text("Confetti")
+            }
+        } .navigationTitle("More Settings")
+    }
+}
+
 struct flashCardView: View {
     var body: some View {
         Text("hello world! this is the flash card view")
@@ -271,6 +318,7 @@ struct flashCardView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    @Binding var confettiEnabled: Bool
     static var previews: some View {
         ContentView()
     }

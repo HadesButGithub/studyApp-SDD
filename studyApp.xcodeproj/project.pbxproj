@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C033E6B32B23FB2100F17953 /* SPConfetti in Frameworks */ = {isa = PBXBuildFile; productRef = C033E6B22B23FB2100F17953 /* SPConfetti */; };
 		C0CA68F32AFC7F6C00B583B1 /* studyAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CA68F22AFC7F6C00B583B1 /* studyAppApp.swift */; };
 		C0CA68F52AFC7F6C00B583B1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CA68F42AFC7F6C00B583B1 /* ContentView.swift */; };
 		C0CA68F72AFC7F6F00B583B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0CA68F62AFC7F6F00B583B1 /* Assets.xcassets */; };
@@ -14,6 +15,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C033E6A32B23F9AD00F17953 /* View+ConfettiCannon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+ConfettiCannon.swift"; sourceTree = "<group>"; };
+		C033E6A52B23F9AD00F17953 /* RoundedCross.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedCross.swift; sourceTree = "<group>"; };
+		C033E6A62B23F9AD00F17953 /* Triangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
+		C033E6A72B23F9AD00F17953 /* SlimRectangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlimRectangle.swift; sourceTree = "<group>"; };
+		C033E6A82B23F9AD00F17953 /* ConfettiSwiftUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfettiSwiftUI.swift; sourceTree = "<group>"; };
 		C0CA68EF2AFC7F6C00B583B1 /* studyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = studyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0CA68F22AFC7F6C00B583B1 /* studyAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = studyAppApp.swift; sourceTree = "<group>"; };
 		C0CA68F42AFC7F6C00B583B1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -28,12 +34,34 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C033E6B32B23FB2100F17953 /* SPConfetti in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C033E6A22B23F9AD00F17953 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				C033E6A32B23F9AD00F17953 /* View+ConfettiCannon.swift */,
+				C033E6A42B23F9AD00F17953 /* Shapes */,
+				C033E6A82B23F9AD00F17953 /* ConfettiSwiftUI.swift */,
+			);
+			name = Sources;
+			path = ConfettiSwiftUI/Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+		C033E6A42B23F9AD00F17953 /* Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				C033E6A52B23F9AD00F17953 /* RoundedCross.swift */,
+				C033E6A62B23F9AD00F17953 /* Triangle.swift */,
+				C033E6A72B23F9AD00F17953 /* SlimRectangle.swift */,
+			);
+			path = Shapes;
+			sourceTree = "<group>";
+		};
 		C0CA68E62AFC7F6C00B583B1 = {
 			isa = PBXGroup;
 			children = (
@@ -65,6 +93,7 @@
 		C0CA68F82AFC7F6F00B583B1 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				C033E6A22B23F9AD00F17953 /* Sources */,
 				C0F802232B22AB1D0066F574 /* AppIcon.png */,
 				C0CA68F92AFC7F6F00B583B1 /* Preview Assets.xcassets */,
 			);
@@ -87,6 +116,9 @@
 			dependencies = (
 			);
 			name = studyApp;
+			packageProductDependencies = (
+				C033E6B22B23FB2100F17953 /* SPConfetti */,
+			);
 			productName = studyApp;
 			productReference = C0CA68EF2AFC7F6C00B583B1 /* studyApp.app */;
 			productType = "com.apple.product-type.application";
@@ -115,6 +147,9 @@
 				Base,
 			);
 			mainGroup = C0CA68E62AFC7F6C00B583B1;
+			packageReferences = (
+				C033E6B12B23FB2100F17953 /* XCLocalSwiftPackageReference "SPConfetti-main" */,
+			);
 			productRefGroup = C0CA68F02AFC7F6C00B583B1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -364,6 +399,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		C033E6B12B23FB2100F17953 /* XCLocalSwiftPackageReference "SPConfetti-main" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "SPConfetti-main";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C033E6B22B23FB2100F17953 /* SPConfetti */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SPConfetti;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C0CA68E72AFC7F6C00B583B1 /* Project object */;
 }
