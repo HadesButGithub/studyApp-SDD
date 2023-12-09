@@ -25,7 +25,7 @@ let questionDict = [
     "What is Rapid Approach Development?": "Software development methodology that emphasizes iterative and fast-paced development cycles.",
     "What is the Structured development approach?": "A systematic software development process that breaks down the project into distinct phases or stages.",
     "What is the End User approach?": "Approach used for small-scale projects where the user with a limited budget quickly develops the product.",
-    "What is the Agile approach?": "An iterative and flexible software development methodology that emphasizes collaboration, adaptability, and frequent feedback loops."
+    "What is the Agile approach?": "An iterative and flexible software development methodology that emphasizes collaboration and adaptability"
 ]
 
 func retrieveContent() {
@@ -57,7 +57,6 @@ struct ContentView: View {
     @State private var showFlashCard = false
     @State private var showNonAvailable = false
     @State var nonAvailableUserText = ""
-    @Binding var confettiEnabled: Bool
     
     var body: some View {
         NavigationStack {
@@ -80,7 +79,7 @@ struct ContentView: View {
                 }
                 .padding(.bottom, 20)
                 .navigationDestination(isPresented: $showMultipleChoice) {
-                    multipleChoiceView(confettiEnabled: $confettiEnabled)
+                    multipleChoiceView()
                 }
                 .navigationDestination(isPresented: $showFlashCard) {
                     flashCardView()
@@ -189,27 +188,33 @@ struct multipleChoiceView: View {
     func answerCorrect() {
         retrieveContent()
         shuffleAnswers()
-        
-        if confettiEnabled == true {
-            confettiPresent = true
-        }
+        confettiPresent = true
+        streak += 1
     }
     
     func answerIncorrect() {
         alertTitle = "wrong 💀"
         alertText = "you got it wrong 💀💀💀"
         showAlert = true
+        streak = 0
     }
     
     @State var randAnswerOrder = [correctAnswer, answer2, answer3, answer4]
     @State var alertTitle = ""
     @State var alertText = ""
+    @State var streak = 0
     @State private var showAlert = false
     @State private var confettiPresent = false
-    @Binding var confettiEnabled: Bool
     
     var body: some View {
         NavigationStack {
+            Spacer()
+            VStack {
+                Text("Answer Streak")
+                    .fontWeight(.semibold)
+                Text("\(streak)")
+                    .fontWeight(.bold)
+            }
             Spacer()
             Text("\(question)")
                 .font(.largeTitle)
@@ -301,15 +306,11 @@ struct remindersView: View {
 }
 
 struct settingsView: View {
-    @State var confettiEnabled = false
     var body: some View {
-        NavigationStack {
-            Toggle(isOn: $confettiEnabled) {
-                Text("Confetti")
-            }
-        } .navigationTitle("More Settings")
+            Text("hello!")
+            .navigationTitle("More Settings")
+        }
     }
-}
 
 struct flashCardView: View {
     var body: some View {
@@ -318,7 +319,6 @@ struct flashCardView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
-    @Binding var confettiEnabled: Bool
     static var previews: some View {
         ContentView()
     }
