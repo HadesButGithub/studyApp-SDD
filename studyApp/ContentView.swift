@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-var currentStudyType = ""
 var question = "Question not loaded."
 var correctAnswer = "Answer not loaded." // Always the correct answer
 var answer2 = "Answer not loaded. -- ID1"
@@ -53,31 +52,38 @@ func retrieveContent() {
 }
 
 struct ContentView: View {
+    @State private var showMultipleChoice = false
+    @State private var showFlashCard = false
     @State private var showNonAvailable = false
     @State var nonAvailableUserText = ""
+    
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Spacer()
+                    .onAppear() {
+                        showMultipleChoice = false
+                        showFlashCard = false
+                    }
                 
-                NavigationLink(destination: multipleChoiceView()) {
+                Menu {
+                    Button(action: {showMultipleChoice = true}) {
+                        Label("Multiple Choice", systemImage: "list.bullet")
+                    }
+                    Button(action: {showFlashCard = true}) {
+                        Label("Flash Cards", systemImage: "menucard.fill")
+                    }
+                } label: {
                     mainButton(imageName: "play.fill", text: "Start")
                 }
                 .padding(.bottom, 20)
-                
-                Menu {
-                    Button(action: {
-                        nonAvailableUserText = "Flash Card"
-                        showNonAvailable = true
-                    }) {
-                        Label("Flash Cards", systemImage: "menucard.fill")
-                    }
-                    Button(action: {currentStudyType = "multipleChoice"}) {
-                        Label("Multiple Choice", systemImage: "list.bullet")
-                    }
-                } label: {
-                    secondaryButton(imageName: "book.fill", text: "Study Types")
+                .navigationDestination(isPresented: $showMultipleChoice) {
+                    multipleChoiceView()
                 }
+                .navigationDestination(isPresented: $showFlashCard) {
+                    flashCardView()
+                }
+                
                 
                 NavigationLink(destination: remindersView()) {
                     secondaryButton(imageName: "bell.fill", text: "Reminders")
@@ -191,62 +197,64 @@ struct multipleChoiceView: View {
     @State var alertText = ""
     @State private var showAlert = false
     var body: some View {
-        Spacer()
-        Text("\(question)")
-            .font(.largeTitle)
-            .fontWeight(.regular)
-            .multilineTextAlignment(.center)
-        Spacer()
-        VStack {
-            Button {
-                if randAnswerOrder[0] == correctAnswer {
-                    answerCorrect()
-                } else {
-                    answerIncorrect()
+        NavigationStack {
+            Spacer()
+            Text("\(question)")
+                .font(.largeTitle)
+                .fontWeight(.regular)
+                .multilineTextAlignment(.center)
+            Spacer()
+            VStack {
+                Button {
+                    if randAnswerOrder[0] == correctAnswer {
+                        answerCorrect()
+                    } else {
+                        answerIncorrect()
+                    }
+                } label: {
+                    multipleChoiceButton(text: "\(randAnswerOrder[0])")
                 }
-            } label: {
-                multipleChoiceButton(text: "\(randAnswerOrder[0])")
-            }
-            Button {
-                if randAnswerOrder[1] == correctAnswer {
-                    answerCorrect()
-                } else {
-                    answerIncorrect()
+                Button {
+                    if randAnswerOrder[1] == correctAnswer {
+                        answerCorrect()
+                    } else {
+                        answerIncorrect()
+                    }
+                } label: {
+                    multipleChoiceButton(text: "\(randAnswerOrder[1])")
                 }
-            } label: {
-                multipleChoiceButton(text: "\(randAnswerOrder[1])")
-            }
-            Button {
-                if randAnswerOrder[2] == correctAnswer {
-                    answerCorrect()
-                } else {
-                    answerIncorrect()
+                Button {
+                    if randAnswerOrder[2] == correctAnswer {
+                        answerCorrect()
+                    } else {
+                        answerIncorrect()
+                    }
+                } label: {
+                    multipleChoiceButton(text: "\(randAnswerOrder[2])")
                 }
-            } label: {
-                multipleChoiceButton(text: "\(randAnswerOrder[2])")
-            }
-            Button {
-                if randAnswerOrder[3] == correctAnswer {
-                    answerCorrect()
-                } else {
-                    answerIncorrect()
+                Button {
+                    if randAnswerOrder[3] == correctAnswer {
+                        answerCorrect()
+                    } else {
+                        answerIncorrect()
+                    }
+                } label: {
+                    multipleChoiceButton(text: "\(randAnswerOrder[3])")
                 }
-            } label: {
-                multipleChoiceButton(text: "\(randAnswerOrder[3])")
             }
+            .alert(isPresented: $showAlert){
+                Alert(
+                    title: Text("\(alertTitle)"),
+                    message: Text("\(alertText)"),
+                    dismissButton: .default(Text("dismiss"))
+                )
+            }
+            Spacer()
+                .navigationTitle("Multiple Choice")
+                .onAppear() {
+                    shuffleAnswers()
+                }
         }
-        .alert(isPresented: $showAlert){
-            Alert(
-                title: Text("\(alertTitle)"),
-                message: Text("\(alertText)"),
-                dismissButton: .default(Text("dismiss"))
-            )
-        }
-        Spacer()
-            .navigationTitle("Multiple Choice")
-            .onAppear() {
-                shuffleAnswers()
-            }
     }
 }
 
