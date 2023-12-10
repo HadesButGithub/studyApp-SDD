@@ -7,8 +7,9 @@
 
 import SwiftUI
 import SPConfetti
+import Foundation
 
-let questionDict = [
+let questionDictEN = [
     "What is the purpose of a context diagram?": "To illustrate the system boundaries and interactions with external entities.",
     "What is open source software?": "Software with source code that is freely available for anyone to view, modify, and distribute.",
     "What is public domain?": "Work that is no longer protected by copyright and can be freely used, copied, and distributed by anyone.",
@@ -22,6 +23,21 @@ let questionDict = [
     "What is the Agile approach?": "An iterative and flexible software development methodology that emphasizes collaboration and adaptability"
 ]
 
+let questionDictFR = [
+    "Quel est le but d'un diagramme de contexte ?": "Illustrer les limites du système et les interactions avec des entités externes.",
+    "Qu'est-ce que le logiciel open source ?": "Un logiciel dont le code source est librement disponible pour que chacun puisse le consulter, le modifier et le distribuer.",
+    "Qu'est-ce que le domaine public ?": "Un travail qui n'est plus protégé par le droit d'auteur et peut être librement utilisé, copié et distribué par tous.",
+    "Qu'est-ce que le logiciel shareware ?": "Un logiciel distribué gratuitement, permettant aux utilisateurs de l'évaluer avant d'acheter la version complète.",
+    "Qu'est-ce que le logiciel commercial ?": "Un logiciel créé et vendu à des fins lucratives.",
+    "Qu'est-ce que les licences de site ?": "Des accords qui permettent aux organisations d'utiliser un logiciel sur plusieurs ordinateurs ou appareils au sein d'un emplacement ou site spécifique.",
+    "Qu'est-ce que la protection contre la copie de disque ?": "Une méthode utilisée pour empêcher la copie ou la duplication non autorisée de logiciels.",
+    "Qu'est-ce que le développement à approche rapide ?": "Une méthodologie de développement de logiciels qui met l'accent sur des cycles de développement itératifs et rapides.",
+    "Qu'est-ce que l'approche de développement structuré ?": "Un processus systématique de développement de logiciels qui découpe le projet en phases ou étapes distinctes.",
+    "Qu'est-ce que l'approche utilisateur final ?": "Une approche utilisée pour des projets de petite envergure où l'utilisateur avec un budget limité développe rapidement le produit.",
+    "Qu'est-ce que l'approche agile ?": "Une méthodologie itérative et flexible de développement de logiciels qui met l'accent sur la collaboration et l'adaptabilité."
+]
+
+
 var question = "questionNonLoad"
 var correctAnswer = "answerNonLoad1" // Always the correct answer
 var answer2 = "answerNonLoad2"
@@ -29,6 +45,12 @@ var answer3 = "answerNonLoad3"
 var answer4 = "answerNonLoad4"
 
 func retrieveContent() {
+    var questionDict = questionDictEN
+    
+    if Locale.preferredLanguages.first?.starts(with: "fr") == true {
+        questionDict = questionDictFR
+    }
+    
     let keys = Array(questionDict.keys)
     let values = Array(questionDict.values)
     
@@ -178,15 +200,15 @@ struct multipleChoiceView: View {
     }
     
     func answerIncorrect() {
-        alertTitle = "wrong"
-        alertText = "wrongDetailed"
+        alertTitle = LocalizedStringKey("wrong")
+        alertText = LocalizedStringKey("wrongDetailed")
         showAlert = true
         streak = 0
     }
     
     @State var randAnswerOrder = [correctAnswer, answer2, answer3, answer4]
-    @State var alertTitle = ""
-    @State var alertText = ""
+    @State var alertTitle = LocalizedStringKey("")
+    @State var alertText = LocalizedStringKey("")
     @State var streak = 0
     @State private var showAlert = false
     @State private var confettiPresent = false
@@ -271,8 +293,8 @@ struct multipleChoiceView: View {
             }
             .alert(isPresented: $showAlert){
                 Alert(
-                    title: Text("\(alertTitle)"),
-                    message: Text("\(alertText)"),
+                    title: Text(alertTitle),
+                    message: Text(alertText),
                     dismissButton: .default(Text("dismiss"))
                 )
             }
