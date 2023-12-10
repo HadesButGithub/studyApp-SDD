@@ -193,8 +193,8 @@ struct multipleChoiceView: View {
     }
     
     func answerIncorrect() {
-        alertTitle = "wrong 💀"
-        alertText = "you got it wrong 💀💀💀"
+        alertTitle = "Incorrect"
+        alertText = "That one's not quite right."
         showAlert = true
         streak = 0
     }
@@ -205,6 +205,7 @@ struct multipleChoiceView: View {
     @State var streak = 0
     @State private var showAlert = false
     @State private var confettiPresent = false
+    @State private var shakeAnim = false
     
     var body: some View {
         NavigationStack {
@@ -287,7 +288,7 @@ struct multipleChoiceView: View {
                 Alert(
                     title: Text("\(alertTitle)"),
                     message: Text("\(alertText)"),
-                    dismissButton: .default(Text("dismiss"))
+                    dismissButton: .default(Text("Try again"))
                 )
             }
             Spacer()
