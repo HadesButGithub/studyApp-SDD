@@ -84,55 +84,39 @@ struct ContentView: View {
         NavigationStack {
             VStack {
                 Spacer()
-                    .onAppear() {
-                        showMultipleChoice = false
-                        showFlashCard = false
-                    }
-                
-                Menu {
-                    Button(action: {showMultipleChoice = true}) {
-                        Label("multiChoice", systemImage: "list.bullet")
-                    }
-                    Button(action: {showFlashCard = true}) {
-                        Label("flashCard", systemImage: "menucard.fill")
-                    }
-                } label: {
-                    HStack {
-                        Image(systemName: "play.fill")
-                            .foregroundColor(.white)
-                        
-                        Text("startLocalise")
-                            .font(.title)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.white)
-                    }
-                    .frame(width: 300, height: 100)
-                    .background(Color.blue)
-                    .cornerRadius(20.0)
-                }
-                .padding(.bottom, 20)
-                .navigationDestination(isPresented: $showMultipleChoice) {
-                    multipleChoiceView()
-                }
-                .navigationDestination(isPresented: $showFlashCard) {
-                    flashCardView()
-                }
 
-                
-                NavigationLink(destination: settingsView()) {
+                NavigationLink(destination: multipleChoiceView()) {
                     HStack {
-                        Image(systemName: "gearshape.fill")
+                        Image(systemName: "list.bullet")
                             .foregroundColor(.white)
                         
-                        Text("configLocalise")
-                            .font(.title3)
+                        Text("multiChoice")
+                            .font(.title)
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
                     }
                     .onAppear() {
                         retrieveContent()
                     }
-                    .frame(width: 250, height: 75)
+                    .frame(width: 300, height: 100)
+                    .background(Color.blue)
+                    .cornerRadius(20.0)
+                }
+                
+                NavigationLink(destination: flashCardView()) {
+                    HStack {
+                        Image(systemName: "menucard.fill")
+                            .foregroundColor(.white)
+                        
+                        Text("flashCard")
+                            .font(.title)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                    }
+                    .onAppear() {
+                        retrieveContent()
+                    }
+                    .frame(width: 300, height: 100)
                     .background(Color.blue)
                     .cornerRadius(20.0)
                 }
@@ -306,14 +290,6 @@ struct multipleChoiceView: View {
         }
     }
 }
-
-
-struct settingsView: View {
-    var body: some View {
-            Divider()
-            .navigationTitle("config")
-        }
-    }
 
 struct flashCardView: View {
     @State private var flashCardContent = ""
