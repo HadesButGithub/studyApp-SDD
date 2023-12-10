@@ -314,9 +314,28 @@ struct settingsView: View {
 
 struct flashCardView: View {
     @State private var flashCardContent = ""
+    @State private var buttonContent = "Flip"
+    @State private var cardFlipped = false
+    @State private var cardsStudied = 0
     
     func initFlashCard() {
         flashCardContent = "\(question)"
+    }
+    
+    
+    func flipOrNewCard() {
+        if cardFlipped == false {
+            flashCardContent = "\(correctAnswer)"
+            buttonContent = "Next Card"
+            cardFlipped = true
+            cardsStudied += 1
+        } else {
+            retrieveContent()
+            flashCardContent = "\(question)"
+            cardFlipped = false
+            buttonContent = "Flip"
+        }
+        
     }
     
     var body: some View {
@@ -332,8 +351,17 @@ struct flashCardView: View {
                 
                 Spacer()
                 
-                Button("Flip") {
-                    flashCardContent = "\(correctAnswer)"
+                Button("\(buttonContent)") {
+                    flipOrNewCard()
+                }.buttonStyle(.bordered)
+                
+                Spacer()
+                
+                VStack {
+                    Text("Cards Studied")
+                        .fontWeight(.semibold)
+                    Text("\(cardsStudied)")
+                        .fontWeight(.bold)
                 }
                 
                 Spacer()
