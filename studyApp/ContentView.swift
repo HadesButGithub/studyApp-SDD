@@ -5,10 +5,12 @@
 //  Created by Harry Lewandowski on 9/11/2023.
 //  NOTE 08/12/2023 @ 11:31am: this app might actually turn out to be good
 
+// Imports libraries for user interface development, confetti effects, and base layer functionality.
 import SwiftUI
 import SPConfetti
 import Foundation
 
+// Establishes dictionary for study set in English
 let questionDictEN = [
     "What is the purpose of a context diagram?": "To illustrate the system boundaries and interactions with external entities.",
     "What is open source software?": "Software with source code that is freely available for anyone to view, modify, and distribute.",
@@ -23,6 +25,7 @@ let questionDictEN = [
     "What is the Agile approach?": "An iterative and flexible software development methodology that emphasizes collaboration and adaptability"
 ]
 
+// Establishes dictionary for study set in French
 let questionDictFR = [
     "Quel est le but d'un diagramme de contexte ?": "Illustrer les limites du système et les interactions avec des entités externes.",
     "Qu'est-ce que le logiciel open source ?": "Un logiciel dont le code source est librement disponible pour que chacun puisse le consulter, le modifier et le distribuer.",
@@ -37,6 +40,7 @@ let questionDictFR = [
     "Qu'est-ce que l'approche agile ?": "Une méthodologie itérative et flexible de développement de logiciels qui met l'accent sur la collaboration et l'adaptabilité."
 ]
 
+// Establishes dictionary for study set in Spanish
 let questionDictES = [
     "¿Cuál es el propósito de un diagrama de contexto?": "Ilustrar los límites del sistema y las interacciones con entidades externas.",
     "¿Qué es el software de código abierto?": "Software cuyo código fuente está disponible libremente para que cualquier persona lo vea, modifique y distribuya.",
@@ -52,30 +56,31 @@ let questionDictES = [
 ]
 
 
-
+// Establishes variables for the question, correct answer, and 3 other random questions.
 var question = "questionNonLoad"
 var correctAnswer = "answerNonLoad1" // Always the correct answer
 var answer2 = "answerNonLoad2"
 var answer3 = "answerNonLoad3"
 var answer4 = "answerNonLoad4"
 
+// Function to retrieve random question, correct answer, and 3 random answers
 func retrieveContent() {
-    var questionDict = questionDictEN
+    var questionDict = questionDictEN // Sets questionDict to questionDictEN by default
     
     if Locale.preferredLanguages.first?.starts(with: "fr") == true {
-        questionDict = questionDictFR
+        questionDict = questionDictFR // Uses French dictionary if system language set to French
     } else if Locale.preferredLanguages.first?.starts(with: "es") == true {
-        questionDict = questionDictES
+        questionDict = questionDictES // Uses Spanish dictionary if system language is Spanish
     }
     
-    let keys = Array(questionDict.keys)
-    let values = Array(questionDict.values)
+    let keys = Array(questionDict.keys) // Establishes keys variable to an Array of all keys from questionDict
+    let values = Array(questionDict.values) // Does same for values
     
-    let randomIndex = Int.random(in: 0..<keys.count)
-    question = keys[randomIndex]
-    correctAnswer = values[randomIndex]
+    let randomIndex = Int.random(in: 0..<keys.count) // Gets a random number from 1 to the last number in the dictionary
+    question = keys[randomIndex] // Sets question var to randomly selected key from dictionary
+    correctAnswer = values[randomIndex] // Sets correctAnswer var to correlating answer
     
-    for i in 0..<3 {
+    for i in 0..<3 { // Gets 3 random answers and sets them to answer2, 3, and 4
         let randomAnswer = Int.random(in: 0..<values.count)
         switch i {
         case 0:
@@ -92,28 +97,24 @@ func retrieveContent() {
 }
 
 struct ContentView: View {
-    @State private var showMultipleChoice = false
-    @State private var showFlashCard = false
-    @State private var showNonAvailable = false
-    @State var nonAvailableUserText = ""
-    
     var body: some View {
         NavigationStack {
-            VStack {
-                Spacer()
+            VStack { // Creates a stack of vertically aligned elements
+                Spacer() // Spaces out UI elements
 
+                // Button that navigates to multipleChoiceView()
                 NavigationLink(destination: multipleChoiceView()) {
                     HStack {
                         Image(systemName: "list.bullet")
                             .foregroundColor(.white)
                         
-                        Text("multiChoice")
-                            .font(.title)
+                        Text("multiChoice") // String for localisation, appears differently based on system language
+                            .font(.title) // Text modifiers
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
                     }
                     .onAppear() {
-                        retrieveContent()
+                        retrieveContent() // Runs the retrieveContent() function when the multiple choice button is visible on screen
                     }
                     .frame(width: 300, height: 100)
                     .background(Color.blue)
@@ -130,9 +131,6 @@ struct ContentView: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
                     }
-                    .onAppear() {
-                        retrieveContent()
-                    }
                     .frame(width: 300, height: 100)
                     .background(Color.blue)
                     .cornerRadius(20.0)
@@ -140,35 +138,12 @@ struct ContentView: View {
                 
                 Spacer()
             }
-            .navigationTitle("studyApp")
-            .padding()
+            .navigationTitle("studyApp") // Adds studyApp title to homepage
         }
     }
 }
 
-struct secondaryButton: View {
-    var imageName: String
-    var text: String
-    
-    var body: some View {
-        HStack {
-            Image(systemName: imageName)
-                .foregroundColor(.white)
-            
-            Text(text)
-                .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundColor(.white)
-        }
-        .onAppear() {
-            retrieveContent()
-        }
-        .frame(width: 250, height: 75)
-        .background(Color.blue)
-        .cornerRadius(20.0)
-    }
-}
-
+// Establishes template for multiple choice answer buttons
 struct multipleChoiceButton: View {
     var text: String
     
@@ -187,38 +162,40 @@ struct multipleChoiceButton: View {
 }
 
 struct multipleChoiceView: View {
+    @State var randAnswerOrder = [correctAnswer, answer2, answer3, answer4] // Creates array used for button shuffling
+    @State var alertTitle = LocalizedStringKey("") // Creates alert variables for incorrect answers
+    @State var alertText = LocalizedStringKey("")
+    @State var streak = 0 // Adds answer streak counter
+    @State private var showAlert = false // When true, shows alert
+    @State private var confettiPresent = false // When true, shows confetti
     
+    // Shuffles the multiple choice buttons
     func shuffleAnswers() {
         self.randAnswerOrder = [correctAnswer, answer2, answer3, answer4]
         randAnswerOrder.shuffle()
     }
     
+    // Function when answer is correct
     func answerCorrect() {
-        retrieveContent()
-        shuffleAnswers()
-        confettiPresent = true
-        streak += 1
+        retrieveContent() // Gets new question and answer set
+        shuffleAnswers() // Shuffles the buttons
+        confettiPresent = true // Displays confetti
+        streak += 1 // Adds 1 to the answer streak
     }
     
     func answerIncorrect() {
-        alertTitle = LocalizedStringKey("wrong")
+        alertTitle = LocalizedStringKey("wrong") // Sets variables for alert content
         alertText = LocalizedStringKey("wrongDetailed")
-        showAlert = true
-        streak = 0
+        showAlert = true // Displays alert
+        streak = 0 // Resets answer streak
     }
     
-    @State var randAnswerOrder = [correctAnswer, answer2, answer3, answer4]
-    @State var alertTitle = LocalizedStringKey("")
-    @State var alertText = LocalizedStringKey("")
-    @State var streak = 0
-    @State private var showAlert = false
-    @State private var confettiPresent = false
-    @State private var shakeAnim = false
+
     
     var body: some View {
         NavigationStack {
             Spacer()
-            VStack {
+            VStack { // Displays high score label and streak
                 Text("highScore")
                     .fontWeight(.semibold)
                 Text("\(streak)")
