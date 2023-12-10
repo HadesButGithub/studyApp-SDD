@@ -8,12 +8,6 @@
 import SwiftUI
 import SPConfetti
 
-var question = "Question not loaded."
-var correctAnswer = "Answer not loaded." // Always the correct answer
-var answer2 = "Answer not loaded. -- ID1"
-var answer3 = "Answer not loaded. -- ID2"
-var answer4 = "Answer not loaded. -- ID3"
-
 let questionDict = [
     "What is the purpose of a context diagram?": "To illustrate the system boundaries and interactions with external entities.",
     "What is open source software?": "Software with source code that is freely available for anyone to view, modify, and distribute.",
@@ -27,6 +21,12 @@ let questionDict = [
     "What is the End User approach?": "Approach used for small-scale projects where the user with a limited budget quickly develops the product.",
     "What is the Agile approach?": "An iterative and flexible software development methodology that emphasizes collaboration and adaptability"
 ]
+
+var question = "questionNonLoad"
+var correctAnswer = "answerNonLoad1" // Always the correct answer
+var answer2 = "answerNonLoad2"
+var answer3 = "answerNonLoad3"
+var answer4 = "answerNonLoad4"
 
 func retrieveContent() {
     let keys = Array(questionDict.keys)
@@ -69,13 +69,24 @@ struct ContentView: View {
                 
                 Menu {
                     Button(action: {showMultipleChoice = true}) {
-                        Label("Multiple Choice", systemImage: "list.bullet")
+                        Label("multiChoice", systemImage: "list.bullet")
                     }
                     Button(action: {showFlashCard = true}) {
-                        Label("Flash Cards", systemImage: "menucard.fill")
+                        Label("flashCard", systemImage: "menucard.fill")
                     }
                 } label: {
-                    mainButton(imageName: "play.fill", text: "Start")
+                    HStack {
+                        Image(systemName: "play.fill")
+                            .foregroundColor(.white)
+                        
+                        Text("startLocalise")
+                            .font(.title)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                    }
+                    .frame(width: 300, height: 100)
+                    .background(Color.blue)
+                    .cornerRadius(20.0)
                 }
                 .padding(.bottom, 20)
                 .navigationDestination(isPresented: $showMultipleChoice) {
@@ -84,57 +95,31 @@ struct ContentView: View {
                 .navigationDestination(isPresented: $showFlashCard) {
                     flashCardView()
                 }
-                
-                
-                NavigationLink(destination: remindersView()) {
-                    secondaryButton(imageName: "bell.fill", text: "Reminders")
-                }
-                
-                Menu {
-                    Text("English")
-                    Text("French")
-                    Text("Spanish")
-                } label: {
-                    secondaryButton(imageName: "bubble.fill", text: "Language")
-                }
+
                 
                 NavigationLink(destination: settingsView()) {
-                    secondaryButton(imageName: "gearshape.fill", text: "More Settings")
+                    HStack {
+                        Image(systemName: "gearshape.fill")
+                            .foregroundColor(.white)
+                        
+                        Text("configLocalise")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                    }
+                    .onAppear() {
+                        retrieveContent()
+                    }
+                    .frame(width: 250, height: 75)
+                    .background(Color.blue)
+                    .cornerRadius(20.0)
                 }
                 
                 Spacer()
             }
-            .alert(isPresented: $showNonAvailable, content: {
-                Alert(
-                    title: Text("Coming soon!"),
-                    message: Text("The \(nonAvailableUserText) study type is currently unavailable."),
-                    dismissButton: .default(Text("ok :("))
-                )
-            })
             .navigationTitle("studyApp")
             .padding()
         }
-    }
-}
-
-
-struct mainButton: View {
-    var imageName: String
-    var text: String
-    
-    var body: some View {
-        HStack {
-            Image(systemName: imageName)
-                .foregroundColor(.white)
-            
-            Text(text)
-                .font(.title)
-                .fontWeight(.semibold)
-                .foregroundColor(.white)
-        }
-        .frame(width: 300, height: 100)
-        .background(Color.blue)
-        .cornerRadius(20.0)
     }
 }
 
@@ -193,8 +178,8 @@ struct multipleChoiceView: View {
     }
     
     func answerIncorrect() {
-        alertTitle = "Incorrect"
-        alertText = "That one's not quite right."
+        alertTitle = "wrong"
+        alertText = "wrongDetailed"
         showAlert = true
         streak = 0
     }
@@ -211,13 +196,13 @@ struct multipleChoiceView: View {
         NavigationStack {
             Spacer()
             VStack {
-                Text("Answer Streak")
+                Text("highScore")
                     .fontWeight(.semibold)
                 Text("\(streak)")
                     .fontWeight(.bold)
             }
             Spacer()
-            Text("\(question)")
+            Text(question)
                 .font(.largeTitle)
                 .fontWeight(.regular)
                 .multilineTextAlignment(.center)
@@ -288,11 +273,11 @@ struct multipleChoiceView: View {
                 Alert(
                     title: Text("\(alertTitle)"),
                     message: Text("\(alertText)"),
-                    dismissButton: .default(Text("Try again"))
+                    dismissButton: .default(Text("dismiss"))
                 )
             }
             Spacer()
-                .navigationTitle("Multiple Choice")
+                .navigationTitle("multiChoice")
                 .onAppear() {
                     shuffleAnswers()
                 }
@@ -300,22 +285,17 @@ struct multipleChoiceView: View {
     }
 }
 
-struct remindersView: View {
-    var body: some View {
-        Text("hello world! this is the reminders view")
-    }
-}
 
 struct settingsView: View {
     var body: some View {
-            Text("hello!")
-            .navigationTitle("More Settings")
+            Divider()
+            .navigationTitle("config")
         }
     }
 
 struct flashCardView: View {
     @State private var flashCardContent = ""
-    @State private var buttonContent = "Flip"
+    @State private var buttonContent = LocalizedStringKey("flashcardFlip")
     @State private var cardFlipped = false
     @State private var cardsStudied = 0
     
@@ -327,14 +307,14 @@ struct flashCardView: View {
     func flipOrNewCard() {
         if cardFlipped == false {
             flashCardContent = "\(correctAnswer)"
-            buttonContent = "Next Card"
+            buttonContent = LocalizedStringKey("flashcardNext")
             cardFlipped = true
             cardsStudied += 1
         } else {
             retrieveContent()
             flashCardContent = "\(question)"
             cardFlipped = false
-            buttonContent = "Flip"
+            buttonContent = LocalizedStringKey("flashcardFlip")
         }
         
     }
@@ -352,14 +332,14 @@ struct flashCardView: View {
                 
                 Spacer()
                 
-                Button("\(buttonContent)") {
+                Button(buttonContent) {
                     flipOrNewCard()
                 }.buttonStyle(.bordered)
                 
                 Spacer()
                 
                 VStack {
-                    Text("Cards Studied")
+                    Text("cardHighScore")
                         .fontWeight(.semibold)
                     Text("\(cardsStudied)")
                         .fontWeight(.bold)
@@ -371,12 +351,13 @@ struct flashCardView: View {
                 initFlashCard()
             }
             
-        }.navigationTitle("Flash Cards")
+        }.navigationTitle("flashCard")
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+        flashCardView()
     }
 }

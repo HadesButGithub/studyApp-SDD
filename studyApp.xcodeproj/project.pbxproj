@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C033E6B32B23FB2100F17953 /* SPConfetti in Frameworks */ = {isa = PBXBuildFile; productRef = C033E6B22B23FB2100F17953 /* SPConfetti */; };
+		C09DA98E2B2570B700DFDD18 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C09DA98D2B2570B700DFDD18 /* Localizable.xcstrings */; };
 		C0CA68F32AFC7F6C00B583B1 /* studyAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CA68F22AFC7F6C00B583B1 /* studyAppApp.swift */; };
 		C0CA68F52AFC7F6C00B583B1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CA68F42AFC7F6C00B583B1 /* ContentView.swift */; };
 		C0CA68F72AFC7F6F00B583B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0CA68F62AFC7F6F00B583B1 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 		C033E6A62B23F9AD00F17953 /* Triangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
 		C033E6A72B23F9AD00F17953 /* SlimRectangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlimRectangle.swift; sourceTree = "<group>"; };
 		C033E6A82B23F9AD00F17953 /* ConfettiSwiftUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfettiSwiftUI.swift; sourceTree = "<group>"; };
+		C09DA98D2B2570B700DFDD18 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		C0CA68EF2AFC7F6C00B583B1 /* studyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = studyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0CA68F22AFC7F6C00B583B1 /* studyAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = studyAppApp.swift; sourceTree = "<group>"; };
 		C0CA68F42AFC7F6C00B583B1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				C0D9C6E32B22AF0E00667974 /* studyApp.entitlements */,
 				C0CA68F22AFC7F6C00B583B1 /* studyAppApp.swift */,
 				C0CA68F42AFC7F6C00B583B1 /* ContentView.swift */,
+				C09DA98D2B2570B700DFDD18 /* Localizable.xcstrings */,
 				C0CA68F62AFC7F6F00B583B1 /* Assets.xcassets */,
 				C0CA68F82AFC7F6F00B583B1 /* Preview Content */,
 			);
@@ -145,6 +148,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = C0CA68E62AFC7F6C00B583B1;
 			packageReferences = (
@@ -166,6 +170,7 @@
 			files = (
 				C0CA68FA2AFC7F6F00B583B1 /* Preview Assets.xcassets in Resources */,
 				C0CA68F72AFC7F6F00B583B1 /* Assets.xcassets in Resources */,
+				C09DA98E2B2570B700DFDD18 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,7 +332,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2alpha;
+				MARKETING_VERSION = 0.3alpha;
 				PRODUCT_BUNDLE_IDENTIFIER = lol.flareon.studyApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -364,7 +369,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2alpha;
+				MARKETING_VERSION = 0.3alpha;
 				PRODUCT_BUNDLE_IDENTIFIER = lol.flareon.studyApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
