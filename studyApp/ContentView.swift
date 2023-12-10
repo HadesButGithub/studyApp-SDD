@@ -37,6 +37,21 @@ let questionDictFR = [
     "Qu'est-ce que l'approche agile ?": "Une méthodologie itérative et flexible de développement de logiciels qui met l'accent sur la collaboration et l'adaptabilité."
 ]
 
+let questionDictES = [
+    "¿Cuál es el propósito de un diagrama de contexto?": "Ilustrar los límites del sistema y las interacciones con entidades externas.",
+    "¿Qué es el software de código abierto?": "Software cuyo código fuente está disponible libremente para que cualquier persona lo vea, modifique y distribuya.",
+    "¿Qué es el dominio público?": "Obra que ya no está protegida por derechos de autor y puede ser utilizada, copiada y distribuida libremente por cualquier persona.",
+    "¿Qué es el software de prueba?": "Software que se distribuye de forma gratuita y permite a los usuarios evaluarlo antes de comprar la versión completa.",
+    "¿Qué es el software comercial?": "Software que se crea y se vende con fines de lucro.",
+    "¿Qué son las licencias de sitio?": "Acuerdos que permiten a las organizaciones usar software en varios equipos o dispositivos dentro de una ubicación o sitio específico.",
+    "¿Qué es la protección de copia del disco?": "Método utilizado para evitar la copia o duplicación no autorizada de software.",
+    "¿Qué es el Desarrollo Rápido de Aplicaciones?": "Metodología de desarrollo de software que enfatiza ciclos de desarrollo iterativos y rápidos.",
+    "¿Qué es el enfoque de desarrollo estructurado?": "Un proceso sistemático de desarrollo de software que divide el proyecto en fases o etapas distintas.",
+    "¿Qué es el enfoque del usuario final?": "Enfoque utilizado para proyectos de pequeña escala en los que el usuario, con un presupuesto limitado, desarrolla rápidamente el producto.",
+    "¿Qué es el enfoque ágil?": "Una metodología de desarrollo de software iterativa y flexible que enfatiza la colaboración y la adaptabilidad."
+]
+
+
 
 var question = "questionNonLoad"
 var correctAnswer = "answerNonLoad1" // Always the correct answer
@@ -49,6 +64,8 @@ func retrieveContent() {
     
     if Locale.preferredLanguages.first?.starts(with: "fr") == true {
         questionDict = questionDictFR
+    } else if Locale.preferredLanguages.first?.starts(with: "es") == true {
+        questionDict = questionDictES
     }
     
     let keys = Array(questionDict.keys)

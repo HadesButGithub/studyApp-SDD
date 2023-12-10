@@ -9,6 +9,12 @@
             "value" : ""
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20,6 +26,12 @@
     "%@" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@"
@@ -41,6 +53,12 @@
             "value" : "%lld"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -57,44 +75,16 @@
             "value" : "Cards Studied"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarjetas estudiadas"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cartes étudiées"
-          }
-        }
-      }
-    },
-    "config" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Settings"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Paramètres"
-          }
-        }
-      }
-    },
-    "configLocalise" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Settings"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Paramètres"
           }
         }
       }
@@ -105,6 +95,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ok"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De acuerdo"
           }
         },
         "fr" : {
@@ -123,6 +119,12 @@
             "value" : "Flash Cards"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarjetas didácticas"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -137,6 +139,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Flip"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voltear"
           }
         },
         "fr" : {
@@ -155,6 +163,12 @@
             "value" : "Next Card"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siguiente tarjeta"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -169,6 +183,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Answer Streak"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Racha de respuestas"
           }
         },
         "fr" : {
@@ -187,27 +207,16 @@
             "value" : "Multiple Choice"
           }
         },
-        "fr" : {
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choix multiple"
-          }
-        }
-      }
-    },
-    "startLocalise" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start"
+            "value" : "Opción multiple"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Commencer"
+            "value" : "Choix multiple"
           }
         }
       }
@@ -218,6 +227,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "studyApp"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplicación de estudio"
           }
         },
         "fr" : {
@@ -236,6 +251,12 @@
             "value" : "Incorrect"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incorrecto"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -250,6 +271,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "That one wasn't correct."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ése no era correcto."
           }
         },
         "fr" : {
